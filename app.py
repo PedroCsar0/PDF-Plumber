@@ -8,6 +8,7 @@ import pytesseract
 import streamlit as st
 import tempfile
 import re
+import google.generativeai as genai
 
 # --- FUNÇÕES DO MOTOR DE OCR ---
 
@@ -83,6 +84,38 @@ def extrair_texto_pdf(caminho_pdf):
             
     return limpar_texto_sujo(texto_completo)
 
+def estruturar_dados_com_gemini(texto_ocr):
+    try:
+        # Puxa a chave do cofre secreto do Streamlit
+        genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+        
+        # Chama o modelo gratuito e rápido do Gemini
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        
+        prompt = f"""
+        Você é um especialista em direito imobiliário e analista de cartório.
+        Abaixo está um texto extraído de uma matrícula de imóvel através de um sistema de OCR. O texto contém muitos erros de leitura, lixo visual, caracteres estranhos e erros de formatação.
+        
+        Sua missão é ler esse texto sujo, ignorar o lixo e extrair os dados reais em um formato limpo, resumido e fácil de ler para uma equipe de engenharia e agronomia.
+        
+        Por favor, estruture a resposta com os seguintes tópicos (se a informação não existir, escreva 'Não identificado'):
+        - **Número da Matrícula:**
+        - **Comarca / Cidade:**
+        - **Área Total (em hectares):**
+        - **Proprietários Atuais:**
+        - **Histórico Resumido (Vendas/Doações):**
+        - **Ônus / Observações (Hipoteca, Usufruto, Reserva Legal, etc):**
+
+        Texto do OCR:
+        ---
+        {texto_ocr}
+        """
+        
+        resposta = model.generate_content(prompt)
+        return resposta.text
+    except Exception as e:
+        return f"Erro ao processar com a IA: {e}"
+
 # --- INTERFACE WEB (FRONTEND) ---
 # Adicionado layout="centered" para otimizar o mobile
 st.set_page_config(
@@ -109,18 +142,37 @@ if arquivo_upado is not None:
             texto_final = extrair_texto_pdf(caminho_temporario)
             os.remove(caminho_temporario)
             
-        st.success("Extração concluída com sucesso!")
+        st.success("OCR concluído! Passando para a Inteligência Artificial...")
         
-        # AJUSTE MOBILE 1: Colocar o botão de Download ANTES do texto
+        # Aqui acontece a mágica: enviamos o texto sujo para o Gemini
+        with st.spinner("A IA está estruturando os dados da matrícula..."):
+            texto_estruturado = estruturar_dados_com_gemini(texto_final)
+            
+        # Mostra o resultado final mastigado na tela
+        st.markdown("### 📊 Resumo Inteligente da Matrícula")
+        st.markdown(texto_estruturado)
+        
+        # Botões de Download
         nome_arquivo_txt = arquivo_upado.name.replace(".pdf", ".txt")
-        st.download_button(
-            label="Baixar arquivo .TXT",
-            data=texto_final,
-            file_name=nome_arquivo_txt,
-            mime="text/plain",
-            use_container_width=True # Faz o botão ocupar a largura toda no celular
-        )
+        col1, col2 = st.columns(2)
         
-        # AJUSTE MOBILE 2: Esconder o texto longo num Expander
-        with st.expander("Ver texto extraído na tela"):
-            st.text_area("Copie o texto abaixo:", value=texto_final, height=250)
+        with col1:
+            st.download_button(
+                label="📥 Baixar Resumo da IA",
+                data=texto_estruturado,
+                file_name=f"RESUMO_{nome_arquivo_txt}",
+                mime="text/plain",
+                use_container_width=True 
+            )
+            
+        with col2:
+            st.download_button(
+                label="🗄️ Baixar OCR Bruto",
+                data=texto_final,
+                file_name=f"BRUTO_{nome_arquivo_txt}",
+                mime="text/plain",
+                use_container_width=True 
+            )
+        
+        with st.expander("👀 Ver texto bruto extraído pelo OCR"):
+            st.text_area("Texto com sujeira:", value=texto_final, height=250)
