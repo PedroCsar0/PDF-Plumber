@@ -7,6 +7,7 @@ from pdf2image import convert_from_path
 import pytesseract
 import streamlit as st
 import tempfile
+import re
 
 # --- FUNÇÕES DO MOTOR DE OCR ---
 
@@ -36,6 +37,14 @@ def limpar_imagem_para_ocr(imagem_pil):
     img_sem_ruido = cv2.medianBlur(img_reta, 3)
     _, img_bin = cv2.threshold(img_sem_ruido, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     return Image.fromarray(img_bin)
+
+def limpar_texto_sujo(texto):
+    texto = re.sub(r'[-.=]+', ' ', texto)
+    texto = re.sub(r'C[IYU]RG', 'CI/RG', texto)
+    texto = re.sub(r'[\|«»\[\]]', '', texto)
+    texto = re.sub(r'([^\.])\n', r'\1 ', texto)
+    texto = re.sub(r'\s+', ' ', texto)
+    return texto.strip()
 
 def extrair_texto_pdf(caminho_pdf):
     texto_completo = ""
@@ -72,7 +81,7 @@ def extrair_texto_pdf(caminho_pdf):
         except Exception as e:
              st.error(f"Erro no OCR: {e}")
             
-    return texto_completo
+    return limpar_texto_sujo(texto_completo)
 
 # --- INTERFACE WEB (FRONTEND) ---
 # Adicionado layout="centered" para otimizar o mobile
