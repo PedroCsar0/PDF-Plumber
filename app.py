@@ -65,7 +65,7 @@ st.title("📄 PDF Plumber - Extrator de texto OCR")
 st.markdown("Faça o upload de um arquivo PDF (legível ou digitalizado). O sistema irá usar Inteligência Artificial para extrair o texto.")
 
 # Área de Upload
-arquivo_upado = st.file_uploader("Arraste o PDF para aqui", type=["pdf"])
+arquivo_upado = st.file_uploader("Arraste o PDF aqui", type=["pdf"])
 
 if arquivo_upado is not None:
     if st.button("Extrair texto", use_container_width=True):
