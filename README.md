@@ -1,4 +1,4 @@
-# 📄 PDF Plumber - Extrator OCR (Ark Group)
+# 📄 PDF Plumber - Extrator OCR
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Web_App-FF4B4B.svg)
