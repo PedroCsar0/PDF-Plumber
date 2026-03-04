@@ -5,4 +5,4 @@ pytesseract
 opencv-python-headless
 numpy
 Pillow
-google-generativeai
+google-genai

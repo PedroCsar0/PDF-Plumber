@@ -8,7 +8,7 @@ import pytesseract
 import streamlit as st
 import tempfile
 import re
-import google.generativeai as genai
+from google import genai
 
 # --- FUNÇÕES DO MOTOR DE OCR ---
 
@@ -86,11 +86,8 @@ def extrair_texto_pdf(caminho_pdf):
 
 def estruturar_dados_com_gemini(texto_ocr):
     try:
-        # Puxa a chave do cofre secreto do Streamlit
-        genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-        
-        # Chama o modelo gratuito e rápido do Gemini
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        # Inicia o cliente novo puxando a chave do cofre secreto do Streamlit
+        client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
         
         prompt = f"""
         Você é um especialista em direito imobiliário e analista de cartório.
@@ -111,8 +108,12 @@ def estruturar_dados_com_gemini(texto_ocr):
         {texto_ocr}
         """
         
-        resposta = model.generate_content(prompt)
-        return resposta.text
+        # Chama o modelo novo (gemini-2.5-flash) usando a sintaxe atualizada
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=prompt
+        )
+        return response.text
     except Exception as e:
         return f"Erro ao processar com a IA: {e}"
 
@@ -149,7 +150,7 @@ if arquivo_upado is not None:
             texto_estruturado = estruturar_dados_com_gemini(texto_final)
             
         # Mostra o resultado final mastigado na tela
-        st.markdown("### 📊 Resumo Inteligente da Matrícula")
+        st.markdown("### Resumo Inteligente da Matrícula")
         st.markdown(texto_estruturado)
         
         # Botões de Download
@@ -174,5 +175,5 @@ if arquivo_upado is not None:
                 use_container_width=True 
             )
         
-        with st.expander("👀 Ver texto bruto extraído pelo OCR"):
+        with st.expander("Ver texto bruto extraído pelo OCR"):
             st.text_area("Texto com sujeira:", value=texto_final, height=250)
