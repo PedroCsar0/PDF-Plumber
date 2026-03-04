@@ -53,42 +53,43 @@ def extrair_texto_pdf(caminho_pdf):
     return texto_completo
 
 # --- INTERFACE WEB (FRONTEND) ---
-# Título personalizado para os seus sócios
-st.set_page_config(page_title="PDF Plumber", page_icon="📄")
-st.title("📄 Extrator de texto OCR")
-st.markdown("Faça o upload de um PDF (legível ou digitalizado). O sistema irá extrair o texto.")
+# Adicionado layout="centered" para otimizar o mobile
+st.set_page_config(
+    page_title="PDF Plumber", 
+    page_icon="📄",
+    layout="centered",
+    initial_sidebar_state="collapsed"
+)
+
+st.title("📄 PDF Plumber - Extrator de texto OCR")
+st.markdown("Faça o upload de um arquivo PDF (legível ou digitalizado). O sistema irá usar Inteligência Artificial para extrair o texto.")
 
 # Área de Upload
-arquivo_upado = st.file_uploader("Arraste o PDF aqui", type=["pdf"])
+arquivo_upado = st.file_uploader("Arraste o PDF para aqui", type=["pdf"])
 
 if arquivo_upado is not None:
-    if st.button("Iniciar Extração", use_container_width=True):
+    if st.button("Extrair texto", use_container_width=True):
         
-        # Cria um "spinner" de carregamento animado
-        with st.spinner("A analisar o documento..."):
-            
-            # Salva o ficheiro upado temporariamente no disco para o pdf2image conseguir ler
+        with st.spinner("Analisando o documento..."):
             with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
                 tmp_file.write(arquivo_upado.getvalue())
                 caminho_temporario = tmp_file.name
                 
-            # Chama o seu motor de extração
             texto_final = extrair_texto_pdf(caminho_temporario)
-            
-            # Apaga o ficheiro temporário
             os.remove(caminho_temporario)
             
         st.success("Extração concluída com sucesso!")
         
-        # Mostra o texto no ecrã para conferência rápida
-        st.text_area("Texto Extraído (Pode copiar diretamente daqui):", value=texto_final, height=300)
-        
-        # Botão para descarregar o TXT
+        # AJUSTE MOBILE 1: Colocar o botão de Download ANTES do texto
         nome_arquivo_txt = arquivo_upado.name.replace(".pdf", ".txt")
         st.download_button(
-            label="Fazer download (TXT)",
+            label="Baixar arquivo .TXT",
             data=texto_final,
             file_name=nome_arquivo_txt,
             mime="text/plain",
-            use_container_width=True
+            use_container_width=True # Faz o botão ocupar a largura toda no celular
         )
+        
+        # AJUSTE MOBILE 2: Esconder o texto longo num Expander
+        with st.expander("Ver texto extraído na tela"):
+            st.text_area("Copie o texto abaixo:", value=texto_final, height=250)
