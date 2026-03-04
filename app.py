@@ -59,7 +59,7 @@ st.title("📄 Extrator de texto OCR")
 st.markdown("Faça o upload de um PDF (legível ou digitalizado). O sistema irá extrair o texto.")
 
 # Área de Upload
-arquivo_upado = st.file_uploader("Arraste o PDF para aqui", type=["pdf"])
+arquivo_upado = st.file_uploader("Arraste o PDF aqui", type=["pdf"])
 
 if arquivo_upado is not None:
     if st.button("Iniciar Extração", use_container_width=True):
