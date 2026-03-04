@@ -93,15 +93,15 @@ def estruturar_dados_com_gemini(texto_ocr):
         Você é um especialista em direito imobiliário e analista de cartório.
         Abaixo está um texto extraído de uma matrícula de imóvel através de um sistema de OCR. O texto contém muitos erros de leitura, lixo visual, caracteres estranhos e erros de formatação.
         
-        Sua missão é ler esse texto sujo, ignorar o lixo e extrair os dados reais em um formato limpo, resumido e fácil de ler para uma equipe de engenharia e agronomia.
+        Sua missão é ler esse texto sujo, ignorar o lixo e extrair os dados reais em um formato limpo e estruturado.
         
         Por favor, estruture a resposta com os seguintes tópicos (se a informação não existir, escreva 'Não identificado'):
         - **Número da Matrícula:**
         - **Comarca / Cidade:**
         - **Área Total (em hectares):**
-        - **Proprietários Atuais:**
+        - **Proprietários Atuais e Qualificação:** Liste os nomes e especifique a condição jurídica de cada um (ex: proprietário pleno, nua-proprietário, usufrutuário). É OBRIGATÓRIO extrair e exibir todos os dados de identificação disponíveis no texto para cada pessoa (RG, CPF, nacionalidade, estado civil, cônjuge, profissão e domicílio).
         - **Histórico Resumido (Vendas/Doações):**
-        - **Ônus / Observações (Hipoteca, Usufruto, Reserva Legal, etc):**
+        - **Ônus / Observações (Hipoteca, Reserva Legal, etc):**
 
         Texto do OCR:
         ---
