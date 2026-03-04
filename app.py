@@ -100,28 +100,29 @@ def estruturar_dados_com_gemini(texto_ocr):
         ### 📄 1. Classificação do Documento
         - **Tipo Principal:** (Ex: Matrícula de Imóvel, Recibo do CAR, CCIR, Contrato de Arrendamento, Contrato de Compra e Venda, etc.)
 
-        ### 📍 2. Dados do Imóvel (Matrículas / INCRA / CCIR)
+        ### 2. Dados do Imóvel (Matrículas / INCRA / CCIR)
         - **Número da Matrícula e Comarca:**
         - **Denominação do Imóvel / Fazenda:**
         - **Área Total (hectares):**
         - **Código INCRA / Número CCIR:**
         - **Módulos Rurais / Módulos Fiscais / Fração Mínima:**
 
-        ### 🌳 3. Dados Ambientais (CAR)
+        ### 3. Dados Ambientais (CAR)
         - **Número do Recibo CAR:**
         - **Situação (Ativo, Pendente, etc.):**
         - **Área de Preservação Permanente (APP) / Reserva Legal:**
 
-        ### 👥 4. Qualificação das Partes
-        - **Envolvidos:** (Liste todos os nomes encontrados com seus respectivos CPFs/CNPJs, RGs, estado civil e domicílio. Especifique claramente a condição de cada um: proprietário pleno, nua-proprietário, usufrutuário, comprador, vendedor, arrendador, arrendatário, etc.)
+        ### 4. Proprietários e Qualificação das Partes
+        - **Identificação Completa:** (É OBRIGATÓRIO extrair todos os nomes citados e seus respectivos documentos: CPFs, CNPJs, RGs, estado civil, cônjuge, profissão e domicílio).
+        - **Condição Jurídica:** (Especifique claramente do lado de cada nome se a pessoa é: proprietário pleno, nua-proprietário, usufrutuário, comprador, vendedor, arrendador ou arrendatário).
 
-        ### 🤝 5. Nuances Contratuais (Apenas para Contratos)
+        ### 5. Nuances Contratuais (Apenas para Contratos)
         - **Objeto do Contrato:**
         - **Valores e Condições de Pagamento:**
         - **Prazos e Vigência:**
         - **Penalidades, Multas e Cláusulas Especiais:**
 
-        ### ⚖️ 6. Histórico e Ônus (Apenas para Matrículas)
+        ### 6. Histórico e Ônus (Apenas para Matrículas)
         - **Histórico Resumido (Vendas/Doações/Desmembramentos):**
         - **Ônus e Restrições:** (Hipotecas, penhoras, alienações fiduciárias, usufrutos ativos ou extintos).
 
