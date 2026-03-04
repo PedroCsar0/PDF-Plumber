@@ -126,6 +126,24 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# --- SISTEMA DE LOGIN SIMPLES ---
+if "autenticado" not in st.session_state:
+    st.session_state.autenticado = False
+
+if not st.session_state.autenticado:
+    st.title("🔒 Acesso Restrito - Ark Group")
+    senha_digitada = st.text_input("Digite a senha de acesso:", type="password")
+    
+    if st.button("Entrar"):
+        if senha_digitada == st.secrets["SENHA_ARK"]:
+            st.session_state.autenticado = True
+            st.rerun() # Recarrega a página liberada
+        else:
+            st.error("Senha incorreta!")
+            
+    st.stop() # Isso bloqueia a execução de todo o resto do código abaixo daqui
+# --------------------------------
+
 st.title("📄 PDF Plumber - Extrator de texto OCR")
 st.markdown("Faça o upload de um arquivo PDF (legível ou digitalizado). O sistema irá usar Inteligência Artificial para extrair o texto.")
 
