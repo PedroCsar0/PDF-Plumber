@@ -9,10 +9,32 @@ import streamlit as st
 import tempfile
 
 # --- FUNÇÕES DO MOTOR DE OCR ---
+
+def alinhar_imagem(img_cv):
+    gray = cv2.bitwise_not(img_cv)
+    coords = np.column_stack(np.where(gray > 0))
+    angulo = cv2.minAreaRect(coords)[-1]
+
+    if angulo < -45:
+        angulo = -(90 + angulo)
+    else:
+        angulo = -angulo
+
+    if abs(angulo) < 0.5:
+        return img_cv
+
+    (h, w) = img_cv.shape[:2]
+    centro = (w // 2, h // 2)
+    M = cv2.getRotationMatrix2D(centro, angulo, 1.0)
+    imagem_rotacionada = cv2.warpAffine(img_cv, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+    return imagem_rotacionada    
+
 def limpar_imagem_para_ocr(imagem_pil):
     img_cv = np.array(imagem_pil)
     img_gray = cv2.cvtColor(img_cv, cv2.COLOR_RGB2GRAY)
-    _, img_bin = cv2.threshold(img_gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    img_reta = alinhar_imagem(img_gray)
+    img_sem_ruido = cv2.medianBlur(img_reta, 3)
+    _, img_bin = cv2.threshold(img_sem_ruido, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     return Image.fromarray(img_bin)
 
 def extrair_texto_pdf(caminho_pdf):
