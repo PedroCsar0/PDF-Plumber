@@ -63,7 +63,7 @@ streamlit run app.py
 
 A aplicação ficará disponível no seu navegador em http://localhost:8501.
 
-🔒 Privacidade
+# 🔒 Privacidade
 Este é um repositório da Ark Group. Os arquivos PDF submetidos na aplicação são processados temporariamente na memória do servidor e eliminados imediatamente após a extração, garantindo a total confidencialidade de dados.
 
 ---
