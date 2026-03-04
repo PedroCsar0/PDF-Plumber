@@ -69,7 +69,7 @@ Rode o comando abaixo no terminal para iniciar o servidor local:
 ```bash
 streamlit run app.py
 ```
-
+---
 #### 🔒 Privacidade
 Este é um repositório da Ark Group. Os arquivos PDF submetidos na aplicação são processados temporariamente na memória do servidor e eliminados imediatamente após a extração, garantindo a total confidencialidade dos dados.
 
