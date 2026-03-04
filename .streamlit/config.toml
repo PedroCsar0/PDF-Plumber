@@ -1,0 +1,15 @@
+[theme]
+# Cor principal (Botões, barra de progresso, links)
+primaryColor = "#005C97" 
+
+# Cor do fundo da tela (Use "#FFFFFF" para claro ou "#0E1117" para escuro)
+backgroundColor = "#F4F6F9"
+
+# Cor do fundo secundário (Onde fica a barra lateral ou painéis de expansão)
+secondaryBackgroundColor = "#E2E8F0"
+
+# Cor do texto
+textColor = "#1E293B"
+
+# Fonte padrão (sans serif é a mais moderna)
+font = "sans serif"

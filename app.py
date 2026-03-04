@@ -161,22 +161,56 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# --- ESTILOS CSS CUSTOMIZADOS ---
+st.markdown("""
+    <style>
+    /* Esconde o menu padrão e o rodapé do Streamlit para dar cara de App próprio */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+
+    /* Deixa os botões mais arredondados e com efeito Hover (animação fluida) */
+    .stButton>button {
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        border: 1px solid #4CAF50; /* Uma cor de borda moderna */
+    }
+    .stButton>button:hover {
+        transform: scale(1.02); /* Cresce 2% ao passar o mouse */
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    }
+    
+    /* Centraliza e estiliza a caixa de Upload */
+    .stFileUploader {
+        border-radius: 10px;
+        padding: 10px;
+    }
+    </style>
+""", unsafe_allow_html=True)
+# --------------------------------
+
 # --- SISTEMA DE LOGIN SIMPLES ---
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
 if not st.session_state.autenticado:
-    st.title("🔒 Acesso Restrito - Ark Group")
-    senha_digitada = st.text_input("Digite a senha de acesso:", type="password")
+    # Cria 3 colunas e usa a do meio para o login (efeito de centralização)
+    col1, col2, col3 = st.columns([1, 2, 1])
     
-    if st.button("Entrar"):
-        if senha_digitada == st.secrets["SENHA_ARK"]:
-            st.session_state.autenticado = True
-            st.rerun() # Recarrega a página liberada
-        else:
-            st.error("Senha incorreta!")
-            
-    st.stop() # Isso bloqueia a execução de todo o resto do código abaixo daqui
+    with col2:
+        st.markdown("<h2 style='text-align: center;'>🔒 Ark Group</h2>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center; color: gray;'>Área restrita. Insira a credencial.</p>", unsafe_allow_html=True)
+        
+        senha_digitada = st.text_input("", placeholder="Digite a senha de acesso...", type="password")
+        
+        if st.button("Entrar no Sistema", use_container_width=True):
+            if senha_digitada == st.secrets["SENHA_ARK"]:
+                st.session_state.autenticado = True
+                st.rerun()
+            else:
+                st.error("❌ Senha incorreta!")
+                
+    st.stop() # Bloqueia o resto da página
 # --------------------------------
 
 st.title("📄 PDF Plumber - Extrator de texto OCR")
