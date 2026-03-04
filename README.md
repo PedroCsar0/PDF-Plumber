@@ -21,9 +21,9 @@ O sistema utiliza Inteligência Artificial para identificar se o PDF possui uma 
 
 ## Acesso Rápido (Cloud)
 
-A aplicação está hospedada na nuvem e pode ser acedida de qualquer dispositivo (computador ou telemóvel), sem necessidade de instalação:
+A aplicação está hospedada na nuvem e pode ser acedida de qualquer dispositivo (computador ou mobile), sem necessidade de instalação:
 
-🔗 **[Aceder ao Extrator PDF Plumber](https://pdf-plumber.streamlit.app/)**
+🔗 **[Extrator PDF Plumber](https://pdf-plumber.streamlit.app/)**
 
 ---
 
