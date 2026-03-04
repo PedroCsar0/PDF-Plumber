@@ -97,7 +97,7 @@ def estruturar_dados_com_gemini(texto_ocr):
         
         Estruture sua resposta preenchendo APENAS os blocos abaixo que fizerem sentido para o documento analisado (se uma informação não existir no texto, não invente, apenas escreva 'Não identificado' ou omita o campo):
 
-        ### 📄 1. Classificação do Documento
+        ### 1. Classificação do Documento
         - **Tipo Principal:** (Ex: Matrícula de Imóvel, Recibo do CAR, CCIR, Contrato de Arrendamento, Contrato de Compra e Venda, etc.)
 
         ### 2. Dados do Imóvel (Matrículas / INCRA / CCIR)
