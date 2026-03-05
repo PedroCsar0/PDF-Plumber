@@ -154,7 +154,7 @@ def estruturar_dados_com_gemini(texto_ocr):
 
 # --- INTERFACE WEB (FRONTEND) ---
 # Adicionado layout="centered" para otimizar o mobile
-icone_personalizado = Image.open("icon.png")
+icone_personalizado = Image.open("logo_ark.png")
 
 st.set_page_config(
     page_title="Ark DataMiner", 
@@ -261,7 +261,7 @@ if not st.session_state.autenticado:
 col_img, col_txt = st.columns([1, 8]) 
 
 with col_img:
-    st.image("icon.png", width=65) 
+    st.image("logo_ark.png", width=65) 
     
 with col_txt:
     st.title("Ark DataMiner")
