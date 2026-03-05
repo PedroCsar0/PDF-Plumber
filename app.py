@@ -175,6 +175,20 @@ st.markdown("""
         margin-bottom: 5px !important;
     }
             
+    /* 1. Encolhe o texto original em inglês até sumir */
+    [data-testid*="Dropzone"] button {
+        font-size: 0px !important;
+    }
+
+    /* 2. Escreve o texto em português por cima */
+    [data-testid*="Dropzone"] button::after {
+        content: "Procurar arquivo" !important;
+        font-size: 14px !important; /* Retorna o tamanho da fonte ao normal */
+        font-weight: 400 !important;
+        color: #1E293B !important; /* Mantém a cor escura do seu tema */
+        display: block !important;
+    }
+            
     /* Esconde o span original em inglês */
     [data-testid*="Dropzone"] > div > div > span,
     [data-testid*="Dropzone"] > div > div > small {
