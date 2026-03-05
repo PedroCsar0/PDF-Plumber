@@ -166,24 +166,29 @@ st.markdown("""
     <style>
 
     /* 1. Traduz o texto "Drag and drop file here" */
-    [data-testid="stFileUploadDropzone"] div div::before {
-        content: "Arraste e solte o documento aqui";
-        font-size: 16px;
-        font-weight: 500;
-        display: block;
-        margin-bottom: 5px;
+    [data-testid*="Dropzone"] > div > div::before {
+        content: "Arraste e solte o documento aqui" !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        display: block !important;
+        color: inherit !important;
+        margin-bottom: 5px !important;
     }
+            
     /* Esconde o span original em inglês */
-    [data-testid="stFileUploadDropzone"] div div span {
-        display: none;
+    [data-testid*="Dropzone"] > div > div > span,
+    [data-testid*="Dropzone"] > div > div > small {
+        display: none !important;
     }
 
     /* 2. Traduz o limite "Limit 200MB per file" */
-    [data-testid="stFileUploadDropzone"] div div::after {
-        content: "Limite de 200MB por arquivo • PDF";
-        font-size: 14px;
-        color: gray;
+    [data-testid*="Dropzone"] > div > div::after {
+        content: "Limite de 200MB por arquivo • PDF" !important;
+        font-size: 14px !important;
+        color: gray !important;
+        display: block !important;
     }
+            
     /* Esconde o small original em inglês */
     [data-testid="stFileUploadDropzone"] div div small {
         display: none;
