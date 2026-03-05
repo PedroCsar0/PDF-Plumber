@@ -164,6 +164,31 @@ st.set_page_config(
 # --- ESTILOS CSS CUSTOMIZADOS ---
 st.markdown("""
     <style>
+
+    /* 1. Traduz o texto "Drag and drop file here" */
+    [data-testid="stFileUploadDropzone"] div div::before {
+        content: "Arraste e solte o documento aqui";
+        font-size: 16px;
+        font-weight: 500;
+        display: block;
+        margin-bottom: 5px;
+    }
+    /* Esconde o span original em inglês */
+    [data-testid="stFileUploadDropzone"] div div span {
+        display: none;
+    }
+
+    /* 2. Traduz o limite "Limit 200MB per file" */
+    [data-testid="stFileUploadDropzone"] div div::after {
+        content: "Limite de 200MB por arquivo • PDF";
+        font-size: 14px;
+        color: gray;
+    }
+    /* Esconde o small original em inglês */
+    [data-testid="stFileUploadDropzone"] div div small {
+        display: none;
+    }                
+
     /* Esconde o menu padrão e o rodapé do Streamlit para dar cara de App próprio */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
@@ -217,7 +242,7 @@ st.title("📄 PDF Plumber - Extrator de texto OCR")
 st.markdown("Faça o upload de um arquivo PDF (legível ou digitalizado). O sistema irá usar Inteligência Artificial para extrair os dados da matrícula.")
 
 # Área de Upload
-arquivo_upado = st.file_uploader("Arraste o PDF aqui", type=["pdf"])
+arquivo_upado = st.file_uploader("Documento PDF", type=["pdf"], label_visibility="collapsed")
 
 if arquivo_upado is not None:
     if st.button("Extrair texto", use_container_width=True):
