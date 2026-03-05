@@ -1,4 +1,4 @@
-# 📄 PDF Plumber - Analista Fundiário e Extrator OCR
+# ⛏️ Ark DataMiner - Analista Fundiário e Extrator OCR
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Web_App-FF4B4B.svg)

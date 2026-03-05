@@ -154,9 +154,11 @@ def estruturar_dados_com_gemini(texto_ocr):
 
 # --- INTERFACE WEB (FRONTEND) ---
 # Adicionado layout="centered" para otimizar o mobile
+icone_personalizado = Image.open("Icon.png")
+
 st.set_page_config(
-    page_title="PDF Plumber", 
-    page_icon="📄",
+    page_title="Ark DataMiner", 
+    page_icon="icone_personalizado",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
@@ -256,8 +258,13 @@ if not st.session_state.autenticado:
                 
     st.stop() # Bloqueia o resto da página
 # --------------------------------
+col_img, col_txt = st.columns([1, 8]) 
 
-st.title("📄 PDF Plumber - Extrator de texto OCR")
+with col_img:
+    st.image("Icon.png", width=65) 
+    
+with col_txt:
+    st.title("Ark DataMiner")
 st.markdown("Faça o upload de um arquivo PDF (legível ou digitalizado). O sistema irá usar Inteligência Artificial para extrair os dados da matrícula.")
 
 # Área de Upload
