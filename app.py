@@ -248,7 +248,7 @@ if not st.session_state.autenticado:
         st.markdown("<h2 style='text-align: center;'>🔒 Ark Group</h2>", unsafe_allow_html=True)
         st.markdown("<p style='text-align: center; color: gray;'>Área restrita. Insira a credencial.</p>", unsafe_allow_html=True)
         
-        senha_digitada = st.text_input("", placeholder="Digite a senha de acesso...", type="password")
+        senha_digitada = st.text_input("Senha de Acesso", placeholder="Digite a senha de acesso...", type="password", label_visibility="collapsed")
         
         if st.button("Entrar no Sistema", use_container_width=True):
             if senha_digitada == st.secrets["SENHA_ARK"]:
