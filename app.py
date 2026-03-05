@@ -8,6 +8,7 @@ import pytesseract
 import streamlit as st
 import tempfile
 import re
+import base64
 from google import genai
 
 # --- FUNÇÕES DO MOTOR DE OCR ---
@@ -260,11 +261,23 @@ if not st.session_state.autenticado:
 # --------------------------------
 col_img, col_txt = st.columns([1, 8]) 
 
-with col_img:
-    st.image("logo_ark.png", width=65) 
-    
-with col_txt:
-    st.title("Ark DataMiner")
+def carregar_imagem_local(caminho):
+    with open(caminho, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+    return f"data:image/png;base64,{encoded_string}"
+
+img_base64 = carregar_imagem_local("logo_ark.png")
+
+# Desenha a logo e o título perfeitamente alinhados, sem perder qualidade e sem clique
+st.markdown(
+    f"""
+    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+        <img src="{img_base64}" width="65" style="margin-right: 15px; pointer-events: none;">
+        <h1 style="margin: 0; padding: 0;">Ark DataMiner</h1>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 st.markdown("Faça o upload de um arquivo PDF (legível ou digitalizado). O sistema irá usar Inteligência Artificial para extrair os dados da matrícula.")
 
 # Área de Upload
